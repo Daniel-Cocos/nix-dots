@@ -21,22 +21,16 @@
     ./modules/browsers/brave.nix
   ];
 
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
-  };
-
   home.packages = with pkgs; [
     # LSP servers
     sqls
     pyright
     lua51Packages.lua
-    (python314.withPackages (
+    (python313.withPackages (
       ps:
         with ps; [
           pylatexenc
+          black
         ]
     ))
     nodePackages.typescript-language-server
@@ -47,11 +41,11 @@
     nixd
     clang-tools
     marksman
+    nodePackages.vscode-langservers-extracted
 
     # Formatters
     pgformatter #SQL
     nodePackages.prettier
-    python3Packages.black
     alejandra
     stylua
     google-java-format

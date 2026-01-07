@@ -63,6 +63,11 @@
 
   # System packages
   environment.systemPackages = with pkgs; [
+    ninja
+    openjdk
+    poetry
+    mprocs
+    gnumake
     clang-tools
     gopls
     nodePackages.vscode-json-languageserver # jsonls
@@ -75,7 +80,6 @@
     yaml-language-server # yamlls
     
     # --- Formatters & Linters (from mason-null-ls) ---
-    black
     isort
     pylint
     nodePackages.stylelint
@@ -104,6 +108,7 @@
     fd
     gimp
     go
+    htop
     kitty
     libreoffice
     lua
