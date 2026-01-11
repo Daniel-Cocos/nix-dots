@@ -56,6 +56,11 @@
       users."user" = { imports = [ ../../home-manager/home.nix ]; };
     };
 
+  # Environment variables
+  environment.variables = {
+    TERMINAL = "kitty";
+  };
+
   # Hyprland
   programs.hyprland.enable = true;
   services.xserver.enable = false;
@@ -63,6 +68,11 @@
 
   # System packages
   environment.systemPackages = with pkgs; [
+    xfce.thunar
+    xfce.xfconf
+    xsettingsd
+    papirus-icon-theme
+
     ninja
     openjdk
     poetry
@@ -79,7 +89,7 @@
     nodePackages.typescript-language-server # tsserver
     yaml-language-server # yamlls
     
-    # --- Formatters & Linters (from mason-null-ls) ---
+    # Formatters & Linters (from mason-null-ls)
     isort
     pylint
     nodePackages.stylelint
@@ -112,7 +122,6 @@
     kitty
     libreoffice
     lua
-    nautilus
     obs-studio
     oh-my-posh
     pamixer
