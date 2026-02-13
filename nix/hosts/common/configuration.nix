@@ -1,15 +1,16 @@
-{ config, pkgs, inputs, ... }:
-
 {
+  config,
+  pkgs,
+  inputs,
+  ...
+}: {
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Networking
-  networking.networkmanager.enable = true;
+  networking.networkmanager.enable = true; # Networking
 
-  # Time zone
-  time.timeZone = "Europe/London";
+  time.timeZone = "Europe/London"; # Time zone
 
   # Locale settings
   i18n.defaultLocale = "en_US.UTF-8";
@@ -35,39 +36,41 @@
   users.users.user = {
     isNormalUser = true;
     description = "user";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [];
     shell = pkgs.zsh;
   };
 
-  programs.zsh.enable = true;
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # Enable flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  # LSP
-  programs.npm.enable = true;
+  nixpkgs.config.allowUnfree = true; # Allow unfree packages
+  nix.settings.experimental-features = ["nix-command" "flakes"]; # Enable flakes
 
   home-manager = {
-      extraSpecialArgs = { inherit inputs; };
-      users."user" = { imports = [ ../../home-manager/home.nix ]; };
-    };
+    extraSpecialArgs = {inherit inputs;};
+    users."user" = {imports = [../../home-manager/home.nix];};
+  };
 
-  # Environment variables
   environment.variables = {
     TERMINAL = "kitty";
   };
 
-  # Hyprland
+  programs.zsh.enable = true;
+  programs.npm.enable = true;
   programs.hyprland.enable = true;
   services.xserver.enable = false;
   services.getty.autologinUser = "user";
 
   # System packages
   environment.systemPackages = with pkgs; [
+    alejandra # nix formatter
+
+    # C libs
+    pkgs.stdenv.cc.cc.lib
+    pkgs.zlib
+    pkgs.glib
+    pkgs.libxml2
+    pkgs.libxslt
+
+    # File explorer
     xfce.thunar
     xfce.xfconf
     xsettingsd
@@ -82,13 +85,13 @@
     gopls
     nodePackages.vscode-json-languageserver # jsonls
     lua-language-server # lua_ls
-    marksman          # marksman
+    marksman # marksman
     pyright
     rust-analyzer
     sqls
     nodePackages.typescript-language-server # tsserver
     yaml-language-server # yamlls
-    
+
     # Formatters & Linters (from mason-null-ls)
     isort
     pylint

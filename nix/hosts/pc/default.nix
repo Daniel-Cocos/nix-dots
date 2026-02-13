@@ -8,7 +8,7 @@
 
   networking.hostName = "pc";
 
-  # NVIDIA stuff
+  # NVIDIA settings
   services.xserver.videoDrivers = [ "nvidia" ];
   
   hardware.nvidia = {
@@ -44,7 +44,7 @@
     gamemode
   ];
   
-  # Optional: enable the server to run as a service (see step 4)
+  # Enable the server to run as a service
   systemd.services.steamcmd-server = {
     description = "CS2 Dedicated Server";
     after = [ "network.target" ];
