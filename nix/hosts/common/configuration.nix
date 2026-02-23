@@ -36,11 +36,12 @@
   users.users.user = {
     isNormalUser = true;
     description = "user";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["networkmanager" "wheel" "kvm" "adbusers"];
     packages = with pkgs; [];
     shell = pkgs.zsh;
   };
 
+  nixpkgs.config.android_sdk.accept_license = true;
   nixpkgs.config.allowUnfree = true; # Allow unfree packages
   nix.settings.experimental-features = ["nix-command" "flakes"]; # Enable flakes
 
@@ -59,16 +60,57 @@
   services.xserver.enable = false;
   services.getty.autologinUser = "user";
 
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      glib
+      gtk3
+      nss
+      nspr
+      dbus
+      cups
+      atk
+      cairo
+      pango
+      gdk-pixbuf
+      alsa-lib
+      libdrm
+      mesa
+      libgbm
+      libxkbcommon
+      xorg.libX11
+      xorg.libXcomposite
+      xorg.libXdamage
+      xorg.libXfixes
+      xorg.libXrandr
+      xorg.libXtst
+      xorg.libXScrnSaver
+      xorg.libxcb
+      at-spi2-atk
+      expat
+      fontconfig
+      freetype
+      libuuid
+      libnotify
+      libxcb
+      xorg.libXcursor
+      xorg.libXi
+      xorg.libXrender
+      xorg.libXext
+
+      stdenv.cc.cc.lib
+      zlib
+      glib
+      libxml2
+      libxslt
+    ];
+  };
+
   # System packages
   environment.systemPackages = with pkgs; [
-    alejandra # nix formatter
+    android-studio-full
 
-    # C libs
-    pkgs.stdenv.cc.cc.lib
-    pkgs.zlib
-    pkgs.glib
-    pkgs.libxml2
-    pkgs.libxslt
+    alejandra # nix formatter
 
     # File explorer
     xfce.thunar
@@ -143,8 +185,7 @@
     zoxide
     zsh
     noto-fonts
-    noto-fonts-emoji
-    noto-fonts-extra
+    noto-fonts-color-emoji
     hyprshot
     waybar
     swaybg
