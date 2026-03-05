@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   inputs,
   ...
@@ -32,16 +31,20 @@
     variant = "";
   };
 
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+  };
+
   # User account
   users.users.user = {
     isNormalUser = true;
     description = "user";
     extraGroups = ["networkmanager" "wheel" "kvm" "adbusers"];
-    packages = with pkgs; [];
     shell = pkgs.zsh;
   };
 
-  nixpkgs.config.android_sdk.accept_license = true;
   nixpkgs.config.allowUnfree = true; # Allow unfree packages
   nix.settings.experimental-features = ["nix-command" "flakes"]; # Enable flakes
 
@@ -78,14 +81,18 @@
       mesa
       libgbm
       libxkbcommon
-      xorg.libX11
-      xorg.libXcomposite
-      xorg.libXdamage
-      xorg.libXfixes
-      xorg.libXrandr
-      xorg.libXtst
-      xorg.libXScrnSaver
-      xorg.libxcb
+      libX11
+      libXcomposite
+      libXdamage
+      libXfixes
+      libXrandr
+      libXtst
+      libXScrnSaver
+      libxcb
+      libXcursor
+      libXi
+      libXrender
+      libXext
       at-spi2-atk
       expat
       fontconfig
@@ -93,10 +100,6 @@
       libuuid
       libnotify
       libxcb
-      xorg.libXcursor
-      xorg.libXi
-      xorg.libXrender
-      xorg.libXext
 
       stdenv.cc.cc.lib
       zlib
@@ -108,13 +111,16 @@
 
   # System packages
   environment.systemPackages = with pkgs; [
-    android-studio-full
+    # TTS/STT
+    wtype       # wayland keystroke injection
+    piper-tts       # make computer talk
+    ffmpeg    # for saving videos
 
     alejandra # nix formatter
 
     # File explorer
-    xfce.thunar
-    xfce.xfconf
+    pkgs.thunar
+    pkgs.xfconf
     xsettingsd
     papirus-icon-theme
 
