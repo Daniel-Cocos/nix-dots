@@ -111,6 +111,8 @@
 
   # System packages
   environment.systemPackages = with pkgs; [
+    opencode
+    discord
     # TTS/STT
     wtype       # wayland keystroke injection
     piper-tts       # make computer talk
