@@ -29,6 +29,9 @@
         with ps; [
           pylatexenc
           black
+          jupyterlab
+          ipykernel
+          nbconvert
         ]
     ))
     nodePackages.typescript-language-server

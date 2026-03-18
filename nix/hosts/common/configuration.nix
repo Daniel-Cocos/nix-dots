@@ -111,11 +111,15 @@
 
   # System packages
   environment.systemPackages = with pkgs; [
+    texlive.combined.scheme-full  # Full TeX Live distribution
+    pandoc
+
     opencode
     discord
+
     # TTS/STT
     wtype       # wayland keystroke injection
-    piper-tts       # make computer talk
+    piper-tts    # make computer talk
     ffmpeg    # for saving videos
 
     alejandra # nix formatter
