@@ -11,12 +11,16 @@
   # Git configuration
   programs.git = {
     enable = true;
-    userName = "Daniel-Cocos";
-    userEmail = "dev.danielcocos@gmail.com";
+    settings.user = {
+      name = "Daniel-Cocos";
+      email = "dev.danielcocos@gmail.com";
+    };
   };
 
   imports = [
     ./modules/browsers/brave.nix
+    ./modules/browsers/firefox.nix
+    ./modules/browsers/zen.nix
   ];
 
   home.packages = with pkgs; [
@@ -71,6 +75,7 @@
     __GL_GSYNC_ALLOWED = "0";
     __GL_VRR_ALLOWED = "0";
   };
+
   home.pointerCursor = {
     gtk.enable = true;
     package = pkgs.bibata-cursors;
