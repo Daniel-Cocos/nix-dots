@@ -111,19 +111,54 @@
 
   # System packages
   environment.systemPackages = with pkgs; [
-    texlive.combined.scheme-full  # Full TeX Live distribution
+    # Existing
+    texlive.combined.scheme-full # Full TeX Live distribution
     pandoc
-
     opencode
     discord
 
     # TTS/STT
-    wtype       # wayland keystroke injection
-    piper-tts    # make computer talk
-    ffmpeg    # for saving videos
+    wtype
+    piper-tts
+    ffmpeg
 
-    alejandra # nix formatter
+    # Languages / LSPs
+    sqls
+    pyright
+    lua51Packages.lua
+    (python313.withPackages (ps:
+      with ps; [
+        pylatexenc
+        black
+        jupyterlab
+        ipykernel
+        nbconvert
+      ]))
+    nodePackages.typescript-language-server
+    typescript
+    vscode-langservers-extracted
+    jdt-language-server
+    lua-language-server
+    nixd
+    clang-tools
+    marksman
 
+    # Formatters
+    pgformatter
+    nodePackages.prettier
+    alejandra
+    stylua
+    google-java-format
+
+    # Linters / DB tools
+    postgresql
+    sqlite
+    mysql80
+    ruff
+    nodePackages.eslint_d
+    nodePackages.stylelint
+    nodePackages.markdownlint-cli
+    statix
     # File explorer
     pkgs.thunar
     pkgs.xfconf

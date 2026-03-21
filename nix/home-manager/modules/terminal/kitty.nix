@@ -37,7 +37,7 @@
 
       scrollbar_width = 0;
 
-      foreground = "#5996ff";
+      foreground = "#4885ff";
       background = "#000000";
       cursor = "#D0D0D0";
 

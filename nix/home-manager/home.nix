@@ -1,6 +1,4 @@
 { pkgs, ... }: {
-  nixpkgs.config.allowUnfree = true;
-
   home.username = "user";
   home.homeDirectory = "/home/user";
   home.stateVersion = "25.05";
@@ -27,48 +25,6 @@
 
     ./modules/terminal/kitty.nix
     ./modules/terminal/tmux.nix
-  ];
-
-  home.packages = with pkgs; [
-    sqls
-    pyright
-    lua51Packages.lua
-    (python313.withPackages (
-      ps:
-        with ps; [
-          pylatexenc
-          black
-          jupyterlab
-          ipykernel
-          nbconvert
-        ]
-    ))
-    nodePackages.typescript-language-server
-    typescript
-    vscode-langservers-extracted
-    jdt-language-server
-    lua-language-server
-    nixd
-    clang-tools
-    marksman
-    nodePackages.vscode-langservers-extracted
-
-    # Formatters
-    pgformatter
-    nodePackages.prettier
-    alejandra
-    stylua
-    google-java-format
-
-    # Linters
-    postgresql
-    sqlite
-    mysql80
-    ruff
-    nodePackages.eslint_d
-    nodePackages.stylelint
-    nodePackages.markdownlint-cli
-    statix
   ];
 
   home.sessionVariables = {
