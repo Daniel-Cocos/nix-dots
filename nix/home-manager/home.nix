@@ -1,14 +1,12 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   nixpkgs.config.allowUnfree = true;
 
   home.username = "user";
   home.homeDirectory = "/home/user";
   home.stateVersion = "25.05";
 
-  # Let Home Manager manage itself
   programs.home-manager.enable = true;
 
-  # Git configuration
   programs.git = {
     enable = true;
     settings.user = {
@@ -21,10 +19,17 @@
     ./modules/browsers/brave.nix
     ./modules/browsers/firefox.nix
     ./modules/browsers/zen.nix
+
+    ./modules/hypr/hyprland.nix
+    ./modules/hypr/hyprlock.nix
+    
+    ./modules/launchers/rofi.nix
+
+    ./modules/terminal/kitty.nix
+    ./modules/terminal/tmux.nix
   ];
 
   home.packages = with pkgs; [
-    # LSP servers
     sqls
     pyright
     lua51Packages.lua
@@ -49,7 +54,7 @@
     nodePackages.vscode-langservers-extracted
 
     # Formatters
-    pgformatter #SQL
+    pgformatter
     nodePackages.prettier
     alejandra
     stylua
@@ -57,7 +62,7 @@
 
     # Linters
     postgresql
-    sqlite #sqlite
+    sqlite
     mysql80
     ruff
     nodePackages.eslint_d
@@ -66,10 +71,8 @@
     statix
   ];
 
-  # Session variables
   home.sessionVariables = {
     EDITOR = "nvim";
-    # Nvidia
     GBM_BACKEND = "nvidia-drm";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     __GL_GSYNC_ALLOWED = "0";

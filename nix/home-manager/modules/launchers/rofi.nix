@@ -1,0 +1,74 @@
+{ pkgs, ... }: {
+  programs.rofi = {
+    enable = true;
+    package = pkgs.rofi;
+  };
+
+  xdg.configFile."rofi/config.rasi".text = ''
+    entry {
+        placeholder: "";
+        text-color: #dddddd;
+        padding: 8px 0 8px 8px;
+    }
+
+    configuration {
+        font: "JetBrainsMono NF ExtraBold 12";
+        lines: 10;
+        fixed-num-lines: true;
+        padding: 10px;
+    }
+
+    inputbar {
+        children: [entry];
+    }
+
+    * {
+        separatorcolor: transparent;
+        selected-normal-background: transparent;
+        normal-background: rgba(255,255,255, 0%);
+        alternate-normal-background: rgba(255,255,255, 0%);
+    }
+
+    mainbox {
+        border: 0px;
+        border-color: rgba(255, 255, 255, 0);
+        border-radius: 16px;
+        padding: 0px;
+    }
+
+    window {
+        border-radius: 16px;
+        border: 2px;
+        border-color: rgba(255, 255, 255, 0.8);
+        background-color: rgba(0,0,0,0.6);
+        width: 30%;
+    }
+
+    listview {
+        lines: 10;
+    }
+
+    element {
+        padding: 10px 10px;
+        height: 50px;
+        border-radius: 0px;
+        children: [ element-text, element-icon ];
+    }
+
+    element-text {
+        text-color: #c5c9d2;
+        highlight: bold #ff36ab;
+    }
+
+    element-text selected {
+        text-color: #ffffff;
+        highlight: bold #51AFEF;
+    }
+
+    #scrollbar {
+        handle-color: transparent;
+        handle-width: 4px;
+        padding: 0;
+    }
+  '';
+}
