@@ -63,6 +63,8 @@
   services.xserver.enable = false;
   services.getty.autologinUser = "user";
 
+  services.playerctld.enable = true;
+
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
@@ -111,6 +113,10 @@
 
   # System packages
   environment.systemPackages = with pkgs; [
+    # Music
+    playerctl
+    spotube
+
     # Existing
     texlive.combined.scheme-full # Full TeX Live distribution
     pandoc

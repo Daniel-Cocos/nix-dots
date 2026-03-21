@@ -4,6 +4,7 @@
   home.stateVersion = "25.05";
 
   programs.home-manager.enable = true;
+  services.playerctld.enable = true;
 
   programs.git = {
     enable = true;

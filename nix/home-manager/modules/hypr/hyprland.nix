@@ -155,6 +155,7 @@ in {
         "$mainMod, B, exec, brave"
         "$mainMod, E, exec, thunar"
         "$mainMod, A, exec, env rofi -show drun"
+        "$mainMod, M, exec, spotube"
 
         # System
         "$mainMod, o, exec, pgrep -x \"waybar\" > /dev/null && pkill waybar || (waybar &)"
@@ -162,6 +163,9 @@ in {
         "$mainMod, s, exec, ${homeDir}/.scripts/screenshot_region.sh"
         "$mainMod, w, exec, ${homeDir}/.scripts/wifi-menu.sh"
         "$mainMod, v, exec, ${homeDir}/.scripts/voice_input.sh"
+        "$mainMod, p, exec, playerctl previous"
+        "$mainMod, SPACE, exec, playerctl play-pause"
+        "$mainMod, n, exec, playerctl next"
 
         # Windows
         "$mainMod, Q, killactive"
