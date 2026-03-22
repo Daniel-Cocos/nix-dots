@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   programs.kitty = {
     enable = true;
     package = pkgs.kitty;
@@ -37,26 +37,27 @@
 
       scrollbar_width = 0;
 
-      foreground = "#4885ff";
+      foreground = "#6f7390"; # cooler, dimmer than white
       background = "#000000";
-      cursor = "#D0D0D0";
+      cursor = "#D4D9DC";
 
-      color0  = "#000000";
-      color8  = "#a8c3cc";
-      color1  = "#ff4d6d";
-      color9  = "#ff4d6d";
-      color2  = "#6fcfff";
-      color10 = "#6fcfff";
-      color3  = "#FFC857";
-      color11 = "#FFC857";
-      color4  = "#ff36ab";
-      color12 = "#ff36ab";
-      color5  = "#5bb6d6";
-      color13 = "#5bb6d6";
-      color6  = "#6ec3e0";
-      color14 = "#6ec3e0";
-      color7  = "#8a9aa6";
-      color15 = "#8a9aa6";
+      color0 = "#0f111a";
+      color1 = "#ff5c7a";
+      color2 = "#6c5ce7";
+      color3 = "#ffb84d";
+      color4 = "#3f7cff";
+      color5 = "#ff3ea5";
+      color6 = "#3fd0ff";
+      color7 = "#b9c0ff";
+
+      color8 = "#2c3045";
+      color9 = "#ff7a95";
+      color10 = "#9f8cff";
+      color11 = "#ffc857";
+      color12 = "#4885ff";
+      color13 = "#ff3ea5";
+      color14 = "#6be6ff";
+      color15 = "#dfe3ff";
     };
   };
 }
