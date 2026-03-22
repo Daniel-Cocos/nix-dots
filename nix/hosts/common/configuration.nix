@@ -116,6 +116,7 @@
     # Music
     playerctl
     spotube
+    cava
 
     # Existing
     texlive.combined.scheme-full # Full TeX Live distribution
