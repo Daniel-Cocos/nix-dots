@@ -37,21 +37,21 @@
 
       scrollbar_width = 0;
 
-      foreground = "#6f7390"; # cooler, dimmer than white
+      foreground = "#6b748f";
       background = "#000000";
       cursor = "#D4D9DC";
 
-      color0 = "#0f111a";
+      color0 = "#6b748f";
       color1 = "#ff5c7a";
-      color2 = "#6c5ce7";
-      color3 = "#ffb84d";
-      color4 = "#3f7cff";
+      color2 = "#4885ff";
+      color3 = "#ffc857";
+      color4 = "#4885ff";
       color5 = "#ff3ea5";
-      color6 = "#3fd0ff";
-      color7 = "#b9c0ff";
+      color6 = "#6b748f";
+      color7 = "#6b748f";
 
-      color8 = "#2c3045";
-      color9 = "#ff7a95";
+      color8 = "#6b748f";
+      color9 = "#ff5c7a";
       color10 = "#9f8cff";
       color11 = "#ffc857";
       color12 = "#4885ff";
