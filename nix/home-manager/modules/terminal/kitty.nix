@@ -56,8 +56,8 @@
       color11 = "#ffc857";
       color12 = "#4885ff";
       color13 = "#ff3ea5";
-      color14 = "#6be6ff";
-      color15 = "#dfe3ff";
+      color14 = "#00ff00";
+      color15 = "#00ff00";
     };
   };
 }
