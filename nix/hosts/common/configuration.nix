@@ -25,6 +25,13 @@
     LC_TIME = "en_GB.UTF-8";
   };
 
+  # Override the package to skip tests
+  nixpkgs.overlays = [
+    (final: prev: {
+      ollama = prev.ollama.overrideAttrs (_: {doCheck = false;});
+    })
+  ];
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -141,7 +148,7 @@
         ipykernel
         nbconvert
       ]))
-    nodePackages.typescript-language-server
+    typescript-language-server
     typescript
     vscode-langservers-extracted
     jdt-language-server
@@ -152,7 +159,7 @@
 
     # Formatters
     pgformatter
-    nodePackages.prettier
+    prettier
     alejandra
     stylua
     google-java-format
@@ -160,11 +167,10 @@
     # Linters / DB tools
     postgresql
     sqlite
-    mysql80
     ruff
-    nodePackages.eslint_d
-    nodePackages.stylelint
-    nodePackages.markdownlint-cli
+    eslint_d
+    stylelint
+    markdownlint-cli
     statix
     # File explorer
     pkgs.thunar
@@ -179,19 +185,19 @@
     gnumake
     clang-tools
     gopls
-    nodePackages.vscode-json-languageserver # jsonls
+    vscode-json-languageserver # jsonls
     lua-language-server # lua_ls
     marksman # marksman
     pyright
     rust-analyzer
     sqls
-    nodePackages.typescript-language-server # tsserver
+    typescript-language-server # tsserver
     yaml-language-server # yamlls
 
     # Formatters & Linters (from mason-null-ls)
     isort
     pylint
-    nodePackages.stylelint
+    stylelint
     stylua
 
     grim
