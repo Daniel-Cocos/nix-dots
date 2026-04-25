@@ -64,13 +64,27 @@
     TERMINAL = "kitty";
   };
 
-  programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+    interactiveShellInit =
+      ''
+        export JDTLS_HOME="$HOME/.local/share/jdtls"
+        mkdir -p "$JDTLS_HOME"
+      '';
+  };
   programs.npm.enable = true;
   programs.hyprland.enable = true;
   services.xserver.enable = false;
   services.getty.autologinUser = "user";
 
   services.playerctld.enable = true;
+
+  services.rabbitmq = {
+    enable = true;
+
+    # http://localhost:15672 to see queues, messages, and connections
+    managementPlugin.enable = true;
+  };
 
   programs.nix-ld = {
     enable = true;
@@ -118,8 +132,24 @@
     ];
   };
 
+  programs.java = {
+      enable = true;
+      package = pkgs.javaPackages.compiler.openjdk25;
+    };
+
   # System packages
   environment.systemPackages = with pkgs; [
+    # Java
+    jdt-language-server
+    maven
+    gradle
+    spring-boot-cli
+    vscode-extensions.vscjava.vscode-java-debug
+    vscode-extensions.vscjava.vscode-java-test
+
+    # HTTP
+    httpyac
+
     # Music
     playerctl
     spotube
@@ -179,7 +209,6 @@
     papirus-icon-theme
 
     ninja
-    openjdk
     poetry
     mprocs
     gnumake
