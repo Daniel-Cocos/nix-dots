@@ -79,13 +79,6 @@
 
   services.playerctld.enable = true;
 
-  services.rabbitmq = {
-    enable = true;
-
-    # http://localhost:15672 to see queues, messages, and connections
-    managementPlugin.enable = true;
-  };
-
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
@@ -139,6 +132,14 @@
 
   # System packages
   environment.systemPackages = with pkgs; [
+    # Document conversion
+    libreoffice-fresh   # For PPTX → PDF conversion
+    tesseract           # OCR for scanned PDFs
+    poppler-utils
+
+    nodejs_22
+    mcphost
+
     # Java
     jdt-language-server
     maven
@@ -237,7 +238,10 @@
     gcc
     tree
     jq
+
     neovim
+    tree-sitter
+
     git
     mpvpaper
     hyprland

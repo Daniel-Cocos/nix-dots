@@ -32,10 +32,6 @@
       bind -n M-# select-window -t :3
       bind -n M-$ select-window -t :4
       bind -n M-% select-window -t :5
-
-      # Enable mouse scroll
-      bind -n WheelUpPane if -F '#{pane_in_mode}' 'send-keys -M' 'copy-mode -e'
-      bind -n WheelDownPane if -F '#{pane_in_mode}' 'send-keys -M' 'send-keys -M'
     '';
   };
 }
