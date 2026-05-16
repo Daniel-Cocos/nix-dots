@@ -66,17 +66,15 @@
 
   programs.zsh = {
     enable = true;
-    interactiveShellInit =
-      ''
-        export JDTLS_HOME="$HOME/.local/share/jdtls"
-        mkdir -p "$JDTLS_HOME"
-      '';
+    interactiveShellInit = ''
+      export JDTLS_HOME="$HOME/.local/share/jdtls"
+      mkdir -p "$JDTLS_HOME"
+    '';
   };
   programs.npm.enable = true;
   programs.hyprland.enable = true;
   services.xserver.enable = false;
   services.getty.autologinUser = "user";
-
   services.playerctld.enable = true;
 
   programs.nix-ld = {
@@ -126,19 +124,50 @@
   };
 
   programs.java = {
+    enable = true;
+    package = pkgs.javaPackages.compiler.openjdk25;
+  };
+
+  programs.kdeconnect.enable = true;
+  networking.firewall.allowedTCPPorts = [1714 1715 1716 1717 1718 1719 1720 1721 1722 1723 1724 1725 1726 1727 1728 1729 1730 1731 1732];
+  networking.firewall.allowedUDPPorts = [1714 1715 1716 1717 1718 1719 1720 1721 1722 1723 1724 1725 1726 1727 1728 1729 1730 1731 1732];
+
+  services.gvfs.enable = true;
+
+  programs = {
+    thunar = {
       enable = true;
-      package = pkgs.javaPackages.compiler.openjdk25;
     };
+
+    xfconf.enable = true;
+    dconf = {
+      enable = true;
+      profiles.user.databases = [
+        {
+          settings = {
+            "org/gnome/desktop/interface" = {
+              icon-theme = "Papirus-Dark";
+              color-scheme = "prefer-dark";
+            };
+          };
+        }
+      ];
+    };
+  };
 
   # System packages
   environment.systemPackages = with pkgs; [
-    # Document conversion
-    libreoffice-fresh   # For PPTX → PDF conversion
-    tesseract           # OCR for scanned PDFs
-    poppler-utils
+    glib
 
-    nodejs_22
-    mcphost
+    quickshell
+
+    proton-vpn #VPN
+    kdePackages.kdeconnect-kde
+
+    # Document conversion
+    libreoffice-fresh # For PPTX → PDF conversion
+    tesseract # OCR for scanned PDFs
+    poppler-utils
 
     # Java
     jdt-language-server
@@ -153,23 +182,15 @@
 
     # Music
     playerctl
-    spotube
     cava
+    cmus
 
-    # Existing
     texlive.combined.scheme-full # Full TeX Live distribution
     pandoc
     opencode
     discord
 
-    # TTS/STT
-    wtype
-    piper-tts
-    ffmpeg
-
     # Languages / LSPs
-    sqls
-    pyright
     lua51Packages.lua
     (python313.withPackages (ps:
       with ps; [
@@ -179,14 +200,9 @@
         ipykernel
         nbconvert
       ]))
-    typescript-language-server
     typescript
     vscode-langservers-extracted
-    jdt-language-server
     lua-language-server
-    nixd
-    clang-tools
-    marksman
 
     # Formatters
     pgformatter
@@ -199,13 +215,14 @@
     postgresql
     sqlite
     ruff
+    eslint
     eslint_d
-    stylelint
     markdownlint-cli
     statix
+
     # File explorer
-    pkgs.thunar
-    pkgs.xfconf
+    pkgs.thunar-volman
+    pkgs.thunar-archive-plugin
     xsettingsd
     papirus-icon-theme
 
@@ -216,11 +233,11 @@
     clang-tools
     gopls
     vscode-json-languageserver # jsonls
-    lua-language-server # lua_ls
-    marksman # marksman
+    marksman
     pyright
     rust-analyzer
     sqls
+    nixd
     typescript-language-server # tsserver
     yaml-language-server # yamlls
 
@@ -228,7 +245,6 @@
     isort
     pylint
     stylelint
-    stylua
 
     grim
     slurp
@@ -249,8 +265,6 @@
     brightnessctl
     curl
     deno
-    eslint
-    eslint_d
     eza
     fzf
     fd
@@ -269,7 +283,6 @@
     tk
     tmux
     tokei
-    typescript
     unzip
     vlc
     wlogout

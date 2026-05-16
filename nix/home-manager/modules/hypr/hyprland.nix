@@ -12,11 +12,14 @@ in {
       ];
 
       "exec-once" = [
+        "xsettingsd"
+        "dconf write /org/gnome/desktop/interface/icon-theme \"'Papirus-Dark'\""
         "hyprctl setcursor Bibata-Modern-Ice 24"
         "hyprlock"
         "swaybg -i ${homeDir}/.wallpapers/wallpaper.png -m fill &"
         "pkill mpvpaper; mpvpaper -o \"loop\" '*' ${homeDir}/.wallpapers/background.mp4"
         "waybar &"
+        "qs &"
         "wl-paste --watch cliphist store"
       ];
 
@@ -34,25 +37,18 @@ in {
         "LIBVA_DRIVER_NAME,nvidia"
         "GBM_BACKEND,nvidia-drm"
         "__GLX_VENDOR_LIBRARY_NAME,nvidia"
-
         "QT_QPA_PLATFORM,wayland;xcb"
         "QT_QPA_PLATFORMTHEME,qt6ct"
         "QT_QPA_PLATFORMTHEME,qt5ct"
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
         "QT_AUTO_SCREEN_SCALE_FACTOR,1"
-
         "GDK_SCALE,1"
-
         "GDK_BACKEND,wayland,x11,*"
         "CLUTTER_BACKEND,wayland"
-
         "XCURSOR_SIZE,24"
-
         "APPIMAGELAUNCHER_DISABLE,1"
-
         "OZONE_PLATFORM,wayland"
         "ELECTRON_OZONE_PLATFORM_HINT,wayland"
-
         "SDL_VIDEODRIVER,wayland"
       ];
 
@@ -105,7 +101,6 @@ in {
         active_opacity = 1.0;
         inactive_opacity = 0.8;
         fullscreen_opacity = 1.0;
-
         blur = {
           enabled = true;
           size = 2;
@@ -114,7 +109,6 @@ in {
           ignore_opacity = true;
           xray = true;
         };
-
         shadow = {
           enabled = false;
           range = 100;
@@ -145,19 +139,18 @@ in {
         "match:namespace ^rofi$, ignore_alpha 0"
         "match:namespace ^waybar$, blur on"
         "match:namespace ^waybar$, ignore_alpha 0"
+        "match:namespace ^quickshell$, blur on"
+        "match:namespace ^quickshell$, ignore_alpha 0"
       ];
 
       "$mainMod" = "SUPER";
 
       bind = [
-        # Applications
         "$mainMod, RETURN, exec, kitty"
         "$mainMod, B, exec, brave"
-        "$mainMod, E, exec, thunar"
-        "$mainMod, A, exec, env rofi -show drun"
+        "$mainMod, E, exec, GTK_THEME=Adwaita-dark thunar"
+        "$mainMod, A, exec, qs ipc call launcher toggle"
         "$mainMod, M, exec, spotube"
-
-        # System
         "$mainMod, o, exec, pgrep -x \"waybar\" > /dev/null && pkill waybar || (waybar &)"
         "$mainMod, F4, exec, wlogout -b 5 -T $(( $(hyprctl -j monitors | jq '.[] | select(.focused==true) | .height') / 4 )) -B $(( $(hyprctl -j monitors | jq '.[] | select(.focused==true) | .height') / 4 ))"
         "$mainMod, s, exec, ${homeDir}/.scripts/screenshot_region.sh"
@@ -166,8 +159,6 @@ in {
         "$mainMod, p, exec, playerctl previous"
         "$mainMod, SPACE, exec, playerctl play-pause"
         "$mainMod, n, exec, playerctl next"
-
-        # Windows
         "$mainMod, Q, killactive"
         "$mainMod SHIFT, Q, exec, hyprctl activewindow | grep pid | tr -d 'pid:' | xargs kill"
         "$mainMod, F, fullscreen, 0"
@@ -181,8 +172,6 @@ in {
         "$mainMod SHIFT, h, resizeactive, -50 0"
         "$mainMod SHIFT, j, resizeactive, 0 50"
         "$mainMod SHIFT, k, resizeactive, 0 -50"
-
-        # Workspaces
         "$mainMod, 1, workspace, 1"
         "$mainMod, 2, workspace, 2"
         "$mainMod, 3, workspace, 3"
@@ -193,7 +182,6 @@ in {
         "$mainMod, 8, workspace, 8"
         "$mainMod, 9, workspace, 9"
         "$mainMod, 0, workspace, 10"
-
         "$mainMod SHIFT, 1, movetoworkspace, 1"
         "$mainMod SHIFT, 2, movetoworkspace, 2"
         "$mainMod SHIFT, 3, movetoworkspace, 3"
@@ -204,8 +192,6 @@ in {
         "$mainMod SHIFT, 8, movetoworkspace, 8"
         "$mainMod SHIFT, 9, movetoworkspace, 9"
         "$mainMod SHIFT, 0, movetoworkspace, 10"
-
-        # Fn/media keys
         ", XF86MonBrightnessUp, exec, brightnessctl -q s +10%"
         ", XF86MonBrightnessDown, exec, brightnessctl -q s 10%-"
         ", XF86AudioRaiseVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
@@ -219,7 +205,6 @@ in {
         ", XF86AudioPrev, exec, playerctl previous"
         ", XF86AudioMicMute, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle"
         ", XF86Lock, exec, hyprlock"
-
         ", code:238, exec, brightnessctl -d smc::kbd_backlight s +10"
         ", code:237, exec, brightnessctl -d smc::kbd_backlight s 10-"
       ];
@@ -231,14 +216,12 @@ in {
 
       animations = {
         enabled = true;
-
         bezier = [
           "wind, 0.05, 0.9, 0.1, 1.05"
           "winIn, 0.1, 1.1, 0.1, 1.0"
           "winOut, 0.3, -0.3, 0, 1"
           "liner, 1, 1, 1, 1"
         ];
-
         animation = [
           "windows, 1, 6, wind, slide"
           "windowsIn, 1, 4, winIn, slide"
