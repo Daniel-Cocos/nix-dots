@@ -1,4 +1,4 @@
-{ config, ... }: let
+{config, ...}: let
   homeDir = config.home.homeDirectory;
 in {
   wayland.windowManager.hyprland = {
@@ -10,17 +10,15 @@ in {
       monitor = [
         "DP-6,1920x1080@360,auto,1"
       ];
-
       "exec-once" = [
         "xsettingsd"
         "dconf write /org/gnome/desktop/interface/icon-theme \"'Papirus-Dark'\""
         "hyprctl setcursor Bibata-Modern-Ice 24"
-        "hyprlock"
-        "swaybg -i ${homeDir}/.wallpapers/wallpaper.png -m fill &"
-        "pkill mpvpaper; mpvpaper -o \"loop\" '*' ${homeDir}/.wallpapers/background.mp4"
         "waybar &"
         "qs &"
         "wl-paste --watch cliphist store"
+        "sleep 2 && qs ipc call lockscreen lock"
+        "sleep 2 && qs ipc call wallpapers restoreLast"
       ];
 
       windowrule = [
@@ -87,8 +85,8 @@ in {
       "$color15" = "rgb(acd1db)";
 
       general = {
-        gaps_in = 3;
-        gaps_out = 7;
+        gaps_in = 0;
+        gaps_out = 0;
         border_size = 0;
         "col.active_border" = "rgba(ffffffff)";
         "col.inactive_border" = "rgba(00000000)";
@@ -97,7 +95,7 @@ in {
       };
 
       decoration = {
-        rounding = 10;
+        rounding = 0;
         active_opacity = 1.0;
         inactive_opacity = 0.8;
         fullscreen_opacity = 1.0;
@@ -118,7 +116,6 @@ in {
       };
 
       dwindle = {
-        pseudotile = true;
         preserve_split = true;
       };
 
@@ -150,12 +147,15 @@ in {
         "$mainMod, B, exec, brave"
         "$mainMod, E, exec, GTK_THEME=Adwaita-dark thunar"
         "$mainMod, A, exec, qs ipc call launcher toggle"
-        "$mainMod, M, exec, spotube"
         "$mainMod, o, exec, pgrep -x \"waybar\" > /dev/null && pkill waybar || (waybar &)"
+        "$mainMod SHIFT, o, exec, pkill waybar"
         "$mainMod, F4, exec, wlogout -b 5 -T $(( $(hyprctl -j monitors | jq '.[] | select(.focused==true) | .height') / 4 )) -B $(( $(hyprctl -j monitors | jq '.[] | select(.focused==true) | .height') / 4 ))"
         "$mainMod, s, exec, ${homeDir}/.scripts/screenshot_region.sh"
+        "$mainMod, M, togglespecialworkspace, magic"
+        "$mainMod SHIFT, M, movetoworkspace, special:magic"
         "$mainMod, w, exec, ${homeDir}/.scripts/wifi-menu.sh"
         "$mainMod, v, exec, ${homeDir}/.scripts/voice_input.sh"
+        "$mainMod, i, exec, qs ipc call wallpapers toggle"
         "$mainMod, p, exec, playerctl previous"
         "$mainMod, SPACE, exec, playerctl play-pause"
         "$mainMod, n, exec, playerctl next"
@@ -168,10 +168,14 @@ in {
         "$mainMod, l, movefocus, r"
         "$mainMod, k, movefocus, u"
         "$mainMod, j, movefocus, d"
-        "$mainMod SHIFT, l, resizeactive, 50 0"
-        "$mainMod SHIFT, h, resizeactive, -50 0"
-        "$mainMod SHIFT, j, resizeactive, 0 50"
-        "$mainMod SHIFT, k, resizeactive, 0 -50"
+        "$mainMod SHIFT, h, movewindow, l"
+        "$mainMod SHIFT, l, movewindow, r"
+        "$mainMod SHIFT, k, movewindow, u"
+        "$mainMod SHIFT, j, movewindow, d"
+        "$mainMod, right, resizeactive, 50 0"
+        "$mainMod, left, resizeactive, -50 0"
+        "$mainMod, down, resizeactive, 0 50"
+        "$mainMod, up, resizeactive, 0 -50"
         "$mainMod, 1, workspace, 1"
         "$mainMod, 2, workspace, 2"
         "$mainMod, 3, workspace, 3"
@@ -231,6 +235,7 @@ in {
           "borderangle, 1, 30, liner, once"
           "fade, 1, 5, default"
           "workspaces, 1, 3.5, wind"
+          "specialWorkspace, 1, 4, wind, slidevert 40%"
         ];
       };
     };

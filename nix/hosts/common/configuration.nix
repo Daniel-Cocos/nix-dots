@@ -62,6 +62,14 @@
 
   environment.variables = {
     TERMINAL = "kitty";
+    EDITOR = "nvim";
+    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+      pkgs.stdenv.cc.cc.lib # libstdc++.so.6 (numpy, pandas, etc.)
+      pkgs.zlib # zlib
+      pkgs.zstd # zstd
+      pkgs.openssl # libssl (requests, urllib3)
+      pkgs.libGL # OpenGL (matplotlib, pygame)
+    ];
   };
 
   programs.zsh = {
@@ -76,6 +84,7 @@
   services.xserver.enable = false;
   services.getty.autologinUser = "user";
   services.playerctld.enable = true;
+  services.teamviewer.enable = true;
 
   programs.nix-ld = {
     enable = true;
@@ -157,6 +166,17 @@
 
   # System packages
   environment.systemPackages = with pkgs; [
+    # Compression
+    p7zip
+    unzip
+    unrar
+
+    uv
+
+    libnotify
+    swaynotificationcenter
+    scrcpy
+    ffmpeg
     glib
 
     quickshell
@@ -197,8 +217,15 @@
         pylatexenc
         black
         jupyterlab
+        jupytext
         ipykernel
         nbconvert
+        pynvim
+        cairosvg
+        pnglatex
+        plotly
+        kaleido
+        pyperclip
       ]))
     typescript
     vscode-langservers-extracted
@@ -281,9 +308,7 @@
     ripgrep
     rofi
     tk
-    tmux
     tokei
-    unzip
     vlc
     wlogout
     yazi

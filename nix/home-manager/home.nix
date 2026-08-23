@@ -14,15 +14,14 @@
     };
   };
 
+  programs.zen-browser = { enable = true; };
+
   imports = [
     ./modules/browsers/brave.nix
-    ./modules/browsers/firefox.nix
-    ./modules/browsers/zen.nix
     ./modules/hypr/hyprland.nix
     ./modules/hypr/hyprlock.nix
     ./modules/launchers/rofi.nix
     ./modules/terminal/kitty.nix
-    ./modules/terminal/tmux.nix
   ];
 
   home.sessionVariables = {
